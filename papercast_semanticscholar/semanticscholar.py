@@ -14,11 +14,9 @@ from papercast.base import BaseCollector
 
 
 class SemanticScholarCollector(BaseCollector):
-    def input_types(self) -> Dict[str, Any]:
-        return {"corpus_id": str}
+    input_types = {"corpus_id": str}
 
-    def output_types(self) -> Dict[str, Any]:
-        return {
+    output_types = {
             "pdf": PDFFile,
             "title": str,
             "authors": List,

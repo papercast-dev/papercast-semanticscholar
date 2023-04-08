@@ -1,1 +1,1 @@
-from .semanticscholar import SemanticScholarCollector
+from .semanticscholar import SemanticScholarProcessor

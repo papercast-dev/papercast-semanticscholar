@@ -10,10 +10,10 @@ from bs4 import BeautifulSoup
 
 from papercast.types import PathLike, PDFFile
 from papercast.production import Production
-from papercast.base import BaseCollector
+from papercast.base import BaseProcessor
 
 
-class SemanticScholarCollector(BaseCollector):
+class SemanticScholarProcessor(BaseProcessor):
     input_types = {"corpus_id": str}
 
     output_types = {
@@ -28,14 +28,14 @@ class SemanticScholarCollector(BaseCollector):
         self.pdf_dir = Path(pdf_dir)
         self.timeout = timeout
 
-    def process(self, corpus_id: str, **kwargs) -> Production:
-        pdf_path, doc = self._download(corpus_id)
-        production = Production()
+    def process(self, production: Production, **kwargs) -> Production:
+        pdf_path, doc = self._download(production.corpus_id) # type: ignore
 
         setattr(production, "pdf", PDFFile(path=pdf_path))
 
         for k, v in doc.items():
             setattr(production, k, v)
+
         return production
 
     def _get_pdf_link_semantic_scholar(self, paper: dict):
